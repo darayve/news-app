@@ -28,4 +28,23 @@ class NewsRepositoryImpl(private val newsAPI: NewsAPI) : NewsRepository {
                 emit(Result.Error(e))
             }
         }.flowOn(Dispatchers.IO)
+
+    override suspend fun getArticleByQuery(query: String): Flow<Result<List<Article>>> =
+        flow {
+            emit(Result.Loading)
+            try {
+                when (val response = makeCall { newsAPI.getArticlesByQuery(searchQuery = query) }) {
+                    is Result.Success -> emit(
+                        Result.Success(
+                            response.data.articles ?: emptyList<Article>()
+                        )
+                    )
+
+                    is Result.Error -> emit(Result.Error(response.throwable))
+                    is Result.Loading -> emit(Result.Loading)
+                }
+            } catch (e: Exception) {
+                emit(Result.Error(e))
+            }
+        }.flowOn(Dispatchers.IO)
 }

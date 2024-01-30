@@ -1,4 +1,4 @@
-package com.darayve.newsapp.ui
+package com.darayve.newsapp.util
 
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily

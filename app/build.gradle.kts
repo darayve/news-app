@@ -95,4 +95,6 @@ dependencies {
     implementation("androidx.compose.ui:ui-text-google-fonts:1.5.4")
     // Swipe Refresh
     implementation("com.google.accompanist:accompanist-swiperefresh:0.27.0")
+    // Icons
+    implementation("androidx.compose.material:material-icons-extended:1.6.0-alpha07")
 }

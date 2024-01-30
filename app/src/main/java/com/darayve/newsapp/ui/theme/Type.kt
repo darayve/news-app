@@ -4,7 +4,7 @@ import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.darayve.newsapp.ui.TextFontProvider
+import com.darayve.newsapp.util.TextFontProvider
 
 private val CrimsonPro = TextStyle(
     fontFamily = TextFontProvider.crimsonProFontFamily,
