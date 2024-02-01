@@ -14,6 +14,8 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
+import com.darayve.newsapp.R
 import com.darayve.newsapp.ui.viewmodel.NewsViewModel
 import com.darayve.newsapp.util.PermissionsHandler
 import com.darayve.newsapp.util.SpeechToTextParser
@@ -53,7 +55,7 @@ fun NewsAppTopBar(
                     speechToTextParser = speechToTextParser
                 )
             } else {
-                Text(text = "News App")
+                Text(text = LocalContext.current.getString(R.string.app_name))
             }
         },
         navigationIcon = {
