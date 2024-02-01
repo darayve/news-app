@@ -10,21 +10,24 @@ import com.darayve.newsapp.data.repository.NewsRepository
 import com.darayve.newsapp.data.repository.NewsRepositoryImpl
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @OptIn(FlowPreview::class)
-class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
+class NewsViewModel(
+    private val newsRepository: NewsRepository,
+) : ViewModel() {
     private val _homePageArticlesState = MutableStateFlow<Result<List<Article>>>(Result.Loading)
-    val homePageArticlesState: StateFlow<Result<List<Article>>> = _homePageArticlesState
+    val homePageArticlesState = _homePageArticlesState.asStateFlow()
 
     private val _searchQuery = MutableStateFlow("")
-    val searchQuery: StateFlow<String> get() = _searchQuery
+    val searchQuery = _searchQuery.asStateFlow()
 
     private val _isSearchModeActive = MutableStateFlow(false)
-    val isSearchModeActive: StateFlow<Boolean> get() = _isSearchModeActive
+    val isSearchModeActive = _isSearchModeActive.asStateFlow()
 
     init {
         viewModelScope.launch {
@@ -38,28 +41,27 @@ class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
     fun getTopHeadlineArticles() {
         viewModelScope.launch {
             newsRepository.getTopHeadlineArticles()
-                .catch { error -> _homePageArticlesState.value = Result.Error(error) }
-                .collect { result -> _homePageArticlesState.value = result }
+                .catch { error -> _homePageArticlesState.update { Result.Error(error) } }
+                .collect { result -> _homePageArticlesState.update { result } }
         }
     }
 
     private fun getArticlesByQuery() {
         viewModelScope.launch {
-            newsRepository.getArticleByQuery(query = _searchQuery.value)
-                .catch { error -> _homePageArticlesState.value = Result.Error(error) }
-                .collect { result -> _homePageArticlesState.value = result }
+            newsRepository.getArticleByQuery(query = _searchQuery.value.trim())
+                .catch { error -> _homePageArticlesState.update { Result.Error(error) } }
+                .collect { result -> _homePageArticlesState.update { result } }
         }
     }
 
     fun setSearchQuery(query: String) {
-        _searchQuery.value = query
+        _searchQuery.update { query }
     }
 
     fun toggleSearchModeActivation() {
-        _isSearchModeActive.value = !_isSearchModeActive.value
-        _searchQuery.value = ""
+        _isSearchModeActive.update { !_isSearchModeActive.value }
+        _searchQuery.update { "" }
     }
-
 }
 
 class NewsViewModelFactory(private val newsAPI: NewsAPI) : ViewModelProvider.Factory {

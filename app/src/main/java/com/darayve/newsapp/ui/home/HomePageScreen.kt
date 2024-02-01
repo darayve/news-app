@@ -33,7 +33,6 @@ fun HomePageScreen(
     navController: NavController,
 ) {
     val articlesState by newsViewModel.homePageArticlesState.collectAsState()
-    // TODO: USAR isRefreshing NO VIEW MODEL E REFATORAR
     var isRefreshing by remember { mutableStateOf(false) }
 
     SwipeRefresh(

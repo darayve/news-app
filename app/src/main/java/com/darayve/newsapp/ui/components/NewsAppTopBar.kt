@@ -15,27 +15,43 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.darayve.newsapp.ui.viewmodel.NewsViewModel
+import com.darayve.newsapp.util.PermissionsHandler
+import com.darayve.newsapp.util.SpeechToTextParser
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun NewsAppTopBar(
     viewModel: NewsViewModel,
-    scrollBehavior: TopAppBarScrollBehavior
+    scrollBehavior: TopAppBarScrollBehavior,
+    speechToTextParser: SpeechToTextParser,
+    permissionsHandler: PermissionsHandler
 ) {
     val isSearchModeActive by viewModel.isSearchModeActive.collectAsState()
     val searchQuery by viewModel.searchQuery.collectAsState()
+    val speechState by speechToTextParser.speechState.collectAsState()
 
     TopAppBar(
         title = {
             if (isSearchModeActive) {
-                SearchField(
+                SearchSection(
                     searchQuery = searchQuery,
                     onSearchQueryChange = { query ->
                         viewModel.setSearchQuery(query = query)
                     },
                     onMicClick = {
-                        // TODO: IMPLEMENT TEXT TO SPEECH
-                    })
+                        when {
+                            permissionsHandler.isMicrophonePermissionGranted() -> {
+                                if (speechState.isSpeaking) {
+                                    speechToTextParser.stopListening()
+                                } else {
+                                    speechToTextParser.startListening()
+                                }
+                            }
+                            else -> permissionsHandler.askForMicrophonePermission()
+                        }
+                    },
+                    speechToTextParser = speechToTextParser
+                )
             } else {
                 Text(text = "News App")
             }

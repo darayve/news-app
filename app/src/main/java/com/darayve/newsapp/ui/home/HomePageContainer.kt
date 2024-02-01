@@ -14,10 +14,17 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.darayve.newsapp.ui.components.NewsAppTopBar
 import com.darayve.newsapp.ui.viewmodel.NewsViewModel
+import com.darayve.newsapp.util.PermissionsHandler
+import com.darayve.newsapp.util.SpeechToTextParser
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomePageContainer(modifier: Modifier = Modifier, viewModel: NewsViewModel) {
+fun HomePageContainer(
+    modifier: Modifier = Modifier,
+    viewModel: NewsViewModel,
+    speechToTextParser: SpeechToTextParser,
+    permissionsHandler: PermissionsHandler
+) {
     Surface(
         modifier = modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -29,7 +36,7 @@ fun HomePageContainer(modifier: Modifier = Modifier, viewModel: NewsViewModel) {
                 .fillMaxSize()
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
             topBar = {
-                NewsAppTopBar(viewModel, scrollBehavior)
+                NewsAppTopBar(viewModel, scrollBehavior, speechToTextParser, permissionsHandler)
             },
         ) { innerPadding ->
             val navController = rememberNavController()
