@@ -22,8 +22,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.unit.dp
-import com.darayve.newsapp.data.model.Article
 import com.darayve.newsapp.data.network.Result
+import com.darayve.newsapp.domain.Article
 import com.darayve.newsapp.ui.ErrorScreen
 import com.darayve.newsapp.ui.LoadingScreen
 import com.darayve.newsapp.ui.components.NewsListItem
@@ -77,8 +77,7 @@ fun NewsListSection(
     innerPadding: PaddingValues,
     onItemListClick: (String) -> Unit
 ) {
-    val art = emptyList<Article>()
-    if (art.isEmpty()) {
+    if (articles.isEmpty()) {
         Column(
             modifier = modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -98,11 +97,11 @@ fun NewsListSection(
                         article = item,
                         modifier = Modifier
                             .padding(top = innerPadding.calculateTopPadding())
-                            .clickable { onItemListClick(item.url ?: "") }
+                            .clickable { onItemListClick(item.url) }
                     )
                 } else {
                     NewsListItem(
-                        modifier = Modifier.clickable { onItemListClick(item.url ?: "") },
+                        modifier = Modifier.clickable { onItemListClick(item.url) },
                         article = item
                     )
                 }

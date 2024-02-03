@@ -3,11 +3,11 @@ package com.darayve.newsapp.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.darayve.newsapp.data.model.Article
 import com.darayve.newsapp.data.network.NewsAPI
 import com.darayve.newsapp.data.network.Result
 import com.darayve.newsapp.data.repository.NewsRepository
 import com.darayve.newsapp.data.repository.NewsRepositoryImpl
+import com.darayve.newsapp.domain.Article
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

@@ -1,9 +1,10 @@
 package com.darayve.newsapp.data.repository
 
-import com.darayve.newsapp.data.model.Article
 import com.darayve.newsapp.data.network.NewsAPI
 import com.darayve.newsapp.data.network.Result
 import com.darayve.newsapp.data.network.makeCall
+import com.darayve.newsapp.domain.Article
+import com.darayve.newsapp.domain.toArticle
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -17,7 +18,8 @@ class NewsRepositoryImpl(private val newsAPI: NewsAPI) : NewsRepository {
                 when (val response = makeCall { newsAPI.getTopHeadlineArticles() }) {
                     is Result.Success -> emit(
                         Result.Success(
-                            response.data.articles ?: emptyList<Article>()
+                            response.data.articles?.map { articleDTO -> articleDTO.toArticle() }
+                                ?: emptyList()
                         )
                     )
 
@@ -36,7 +38,8 @@ class NewsRepositoryImpl(private val newsAPI: NewsAPI) : NewsRepository {
                 when (val response = makeCall { newsAPI.getArticlesByQuery(searchQuery = query) }) {
                     is Result.Success -> emit(
                         Result.Success(
-                            response.data.articles ?: emptyList<Article>()
+                            response.data.articles?.map { articleDTO -> articleDTO.toArticle() }
+                                ?: emptyList()
                         )
                     )
 

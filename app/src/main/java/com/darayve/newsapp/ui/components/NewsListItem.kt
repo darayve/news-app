@@ -10,7 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.darayve.newsapp.data.model.Article
+import com.darayve.newsapp.domain.Article
 
 @Composable
 fun NewsListItem(modifier: Modifier = Modifier, article: Article) {
@@ -19,9 +19,23 @@ fun NewsListItem(modifier: Modifier = Modifier, article: Article) {
             .padding(18.dp)
             .fillMaxWidth()
     ) {
-        Text(text = article.title!!, style = MaterialTheme.typography.headlineSmall)
+        Text(
+            text = article.title,
+            style = MaterialTheme.typography.headlineSmall
+        )
+
         Spacer(modifier = Modifier.height(14.dp))
-        // TODO: EXTRAIR FORMATAÇÃO DOS PARAMETROS QUANDO VEM NULO OU VAZIO
-        Text(text = "Author: ${article.author ?: "None"}", style = MaterialTheme.typography.bodyLarge)
+
+        Text(
+            text = "Source: ${article.source}",
+            style = MaterialTheme.typography.bodyLarge
+        )
+
+        Spacer(modifier = Modifier.height(14.dp))
+
+        Text(
+            text = "Author: ${article.author}",
+            style = MaterialTheme.typography.bodyMedium
+        )
     }
 }

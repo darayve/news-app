@@ -1,7 +1,7 @@
 package com.darayve.newsapp.data.repository
 
-import com.darayve.newsapp.data.model.Article
 import com.darayve.newsapp.data.network.Result
+import com.darayve.newsapp.domain.Article
 import kotlinx.coroutines.flow.Flow
 
 interface NewsRepository {
