@@ -2,6 +2,7 @@ package com.darayve.newsapp.ui.theme
 
 import android.app.Activity
 import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
@@ -34,6 +35,7 @@ private val LightColorScheme = lightColorScheme(
     onError = Color.White
 )
 
+@RequiresApi(Build.VERSION_CODES.Q)
 @Composable
 fun NewsAppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -53,7 +55,10 @@ fun NewsAppTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.primary.toArgb()
+            window.statusBarColor = MidnightTransparent.toArgb()
+            window.navigationBarColor = MidnightTransparent.toArgb()
+            window.isStatusBarContrastEnforced = true
+            window.isNavigationBarContrastEnforced = true
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
         }
     }

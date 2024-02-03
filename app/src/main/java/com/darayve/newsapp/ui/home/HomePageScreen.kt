@@ -1,7 +1,11 @@
 package com.darayve.newsapp.ui.home
 
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -13,15 +17,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.unit.dp
 import com.darayve.newsapp.data.model.Article
 import com.darayve.newsapp.data.network.Result
 import com.darayve.newsapp.ui.ErrorScreen
 import com.darayve.newsapp.ui.LoadingScreen
 import com.darayve.newsapp.ui.components.NewsListItem
+import com.darayve.newsapp.ui.theme.SilverMist
 import com.darayve.newsapp.ui.viewmodel.NewsViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
@@ -30,7 +36,7 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 fun HomePageScreen(
     innerPadding: PaddingValues,
     newsViewModel: NewsViewModel,
-    navController: NavController,
+    onNavigateToArticle: (String) -> Unit,
 ) {
     val articlesState by newsViewModel.homePageArticlesState.collectAsState()
     var isRefreshing by remember { mutableStateOf(false) }
@@ -58,6 +64,7 @@ fun HomePageScreen(
                 innerPadding = innerPadding,
                 modifier = Modifier,
                 articles = (articlesState as Result.Success).data,
+                onItemListClick = onNavigateToArticle
             )
         }
     }
@@ -67,28 +74,63 @@ fun HomePageScreen(
 fun NewsListSection(
     modifier: Modifier = Modifier,
     articles: List<Article>,
-    innerPadding: PaddingValues
+    innerPadding: PaddingValues,
+    onItemListClick: (String) -> Unit
 ) {
-    if (articles.isEmpty()) {
-        Text(
-            text = "No articles were found. Try searching again.",
-            modifier = modifier.padding(innerPadding),
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.bodyLarge,
-            fontSize = 18.sp
-        )
+    val art = emptyList<Article>()
+    if (art.isEmpty()) {
+        Column(
+            modifier = modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "No articles were found. Try searching again.",
+                modifier = modifier
+                    .padding(innerPadding),
+                style = MaterialTheme.typography.bodyLarge,
+            )
+        }
     } else {
         LazyColumn(modifier = modifier) {
             itemsIndexed(articles) { index, item ->
                 if (index == 0) {
                     NewsListItem(
                         article = item,
-                        modifier = Modifier.padding(top = innerPadding.calculateTopPadding())
+                        modifier = Modifier
+                            .padding(top = innerPadding.calculateTopPadding())
+                            .clickable { onItemListClick(item.url ?: "") }
                     )
                 } else {
-                    NewsListItem(article = item)
+                    NewsListItem(
+                        modifier = Modifier.clickable { onItemListClick(item.url ?: "") },
+                        article = item
+                    )
                 }
+                DashedDivider()
             }
         }
     }
+}
+
+@Composable
+private fun DashedDivider() {
+    val pathEffect =
+        PathEffect.dashPathEffect(
+            intervals = floatArrayOf(10f, 10f),
+            phase = 0f
+        )
+    Canvas(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
+        onDraw = {
+            drawLine(
+                strokeWidth = 3f,
+                color = SilverMist,
+                start = Offset.Zero,
+                end = Offset(size.width, 0f),
+                pathEffect = pathEffect
+            )
+        }
+    )
 }
