@@ -45,7 +45,9 @@ fun SearchSection(
             onValueChange = { query ->
                 onSearchQueryChange(query)
             },
-            textStyle = MaterialTheme.typography.bodyLarge,
+            textStyle = MaterialTheme.typography.bodyLarge.copy(
+                MaterialTheme.colorScheme.onPrimary
+            ),
             singleLine = true,
         )
         IconButton(

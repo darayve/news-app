@@ -10,3 +10,4 @@ val Scarlet = Color(0xFFC54141)
 val OceanBlue = Color(0xff034fde)
 val SilverMist = Color(0xffcccccc)
 val GraphiteGray = Color(0xff393d46)
+val White = Color.White
