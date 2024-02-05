@@ -1,10 +1,12 @@
 package com.darayve.newsapp.ui.activity
 
 import android.Manifest
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import com.darayve.newsapp.data.network.NewsAPI
 import com.darayve.newsapp.data.network.RetrofitClient
@@ -44,6 +46,7 @@ class MainActivity : ComponentActivity() {
             }
         }
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
