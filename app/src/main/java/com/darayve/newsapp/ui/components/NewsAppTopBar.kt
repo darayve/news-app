@@ -14,7 +14,7 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import com.darayve.newsapp.R
 import com.darayve.newsapp.ui.viewmodel.NewsViewModel
 import com.darayve.newsapp.util.PermissionsHandler
@@ -32,56 +32,47 @@ fun NewsAppTopBar(
     val searchQuery by viewModel.searchQuery.collectAsState()
     val speechState by speechToTextParser.speechState.collectAsState()
 
-    TopAppBar(
-        title = {
-            if (isSearchModeActive) {
-                SearchSection(
-                    searchQuery = searchQuery,
-                    onSearchQueryChange = { query ->
-                        viewModel.setSearchQuery(query = query)
-                    },
-                    onMicClick = {
-                        when {
-                            permissionsHandler.isMicrophonePermissionGranted() -> {
-                                if (speechState.isSpeaking) {
-                                    speechToTextParser.stopListening()
-                                } else {
-                                    speechToTextParser.startListening()
-                                }
-                            }
-                            else -> permissionsHandler.askForMicrophonePermission()
+    TopAppBar(title = {
+        if (isSearchModeActive) {
+            SearchSection(searchQuery = searchQuery, onSearchQueryChange = { query ->
+                viewModel.setSearchQuery(query = query)
+            }, onMicClick = {
+                when {
+                    permissionsHandler.isMicrophonePermissionGranted() -> {
+                        if (speechState.isSpeaking) {
+                            speechToTextParser.stopListening()
+                        } else {
+                            speechToTextParser.startListening()
                         }
-                    },
-                    speechToTextParser = speechToTextParser
+                    }
+
+                    else -> permissionsHandler.askForMicrophonePermission()
+                }
+            }, speechToTextParser = speechToTextParser
+            )
+        } else {
+            Text(text = stringResource(R.string.app_name))
+        }
+    }, navigationIcon = {
+        if (isSearchModeActive) {
+            IconButton(onClick = { viewModel.toggleSearchModeActivation() }) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBackIosNew,
+                    contentDescription = stringResource(R.string.icon_arrow_content_description)
                 )
-            } else {
-                Text(text = LocalContext.current.getString(R.string.app_name))
-            }
-        },
-        navigationIcon = {
-            if (isSearchModeActive) {
-                IconButton(onClick = { viewModel.toggleSearchModeActivation() }) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBackIosNew,
-                        contentDescription = "Exit search mode"
-                    )
-                }
-            }
-        },
-        scrollBehavior = scrollBehavior,
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-            titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-        ),
-        actions = {
-            if (!isSearchModeActive) {
-                IconButton(onClick = { viewModel.toggleSearchModeActivation() }) {
-                    Icon(
-                        imageVector = Icons.Filled.Search,
-                        contentDescription = "Search for articles"
-                    )
-                }
             }
         }
-    )
+    }, scrollBehavior = scrollBehavior, colors = TopAppBarDefaults.topAppBarColors(
+        containerColor = MaterialTheme.colorScheme.primaryContainer,
+        titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+    ), actions = {
+        if (!isSearchModeActive) {
+            IconButton(onClick = { viewModel.toggleSearchModeActivation() }) {
+                Icon(
+                    imageVector = Icons.Filled.Search,
+                    contentDescription = stringResource(R.string.icon_search_content_description)
+                )
+            }
+        }
+    })
 }

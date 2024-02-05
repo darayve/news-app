@@ -21,7 +21,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.darayve.newsapp.R
 import com.darayve.newsapp.util.SpeechToTextParser
 
 // TODO: Consertar bug do BasicTextField quando o stt é usado
@@ -48,7 +50,7 @@ fun SearchSection(
             onValueChange = onSearchQueryChange,
             textStyle = MaterialTheme.typography.bodyLarge,
             singleLine = true,
-            placeholder = { Text("Search for a subject") },
+            placeholder = { Text(stringResource(R.string.textfield_search_placeholder)) },
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = Color.Transparent,
                 unfocusedBorderColor = Color.Transparent,
@@ -64,13 +66,15 @@ fun SearchSection(
                 if (isSpeaking) {
                     Icon(
                         imageVector = Icons.Default.MicOff,
-                        contentDescription = "Stop voice search"
+                        contentDescription = stringResource(R.string.icon_micoff_content_description)
                     )
                 } else {
-                    Icon(imageVector = Icons.Default.Mic, contentDescription = "Search by voice")
+                    Icon(
+                        imageVector = Icons.Default.Mic,
+                        contentDescription = stringResource(R.string.icon_micon_content_description)
+                    )
                 }
             }
-
         }
     }
 

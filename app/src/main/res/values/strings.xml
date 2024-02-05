@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Noozapp</string>
+    <string name="icon_arrow_content_description">Exit search mode</string>
+    <string name="icon_search_content_description">Search for articles</string>
+    <string name="textfield_search_placeholder">Search for a subject</string>
+    <string name="icon_micoff_content_description">Stop voice search</string>
+    <string name="icon_micon_content_description">Search by voice</string>
 </resources>
