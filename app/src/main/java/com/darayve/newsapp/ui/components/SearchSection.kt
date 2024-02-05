@@ -24,10 +24,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.darayve.newsapp.R
+import com.darayve.newsapp.ui.theme.GraphiteGray
 import com.darayve.newsapp.util.SpeechToTextParser
 
-// TODO: Consertar bug do BasicTextField quando o stt é usado
-// TODO: Alterar futuramente o text field para conter placeholder etc
 @Composable
 fun SearchSection(
     searchQuery: String,
@@ -50,7 +49,12 @@ fun SearchSection(
             onValueChange = onSearchQueryChange,
             textStyle = MaterialTheme.typography.bodyLarge,
             singleLine = true,
-            placeholder = { Text(stringResource(R.string.textfield_search_placeholder)) },
+            placeholder = {
+                Text(
+                    text = stringResource(R.string.textfield_search_placeholder),
+                    color = GraphiteGray
+                )
+            },
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = Color.Transparent,
                 unfocusedBorderColor = Color.Transparent,

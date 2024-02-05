@@ -30,8 +30,8 @@ class NewsViewModel(
     val isSearchModeActive = _isSearchModeActive.asStateFlow()
 
     init {
+        getTopHeadlineArticles()
         viewModelScope.launch {
-            getTopHeadlineArticles()
             _searchQuery.debounce(320).collect { query ->
                 if (query.isNotEmpty()) getArticlesByQuery()
             }

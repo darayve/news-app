@@ -27,7 +27,7 @@ import com.darayve.newsapp.domain.Article
 import com.darayve.newsapp.ui.ErrorScreen
 import com.darayve.newsapp.ui.LoadingScreen
 import com.darayve.newsapp.ui.components.NewsListItem
-import com.darayve.newsapp.ui.theme.SilverMist
+import com.darayve.newsapp.ui.theme.MidnightTransparent
 import com.darayve.newsapp.ui.viewmodel.NewsViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
@@ -56,7 +56,9 @@ fun HomePageScreen(
             }
 
             is Result.Error -> ErrorScreen(
-                modifier = Modifier.padding(innerPadding),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(vertical = innerPadding.calculateTopPadding(), horizontal = 16.dp),
                 error = (articlesState as Result.Error).throwable
             )
 
@@ -125,7 +127,7 @@ private fun DashedDivider() {
         onDraw = {
             drawLine(
                 strokeWidth = 3f,
-                color = SilverMist,
+                color = MidnightTransparent,
                 start = Offset.Zero,
                 end = Offset(size.width, 0f),
                 pathEffect = pathEffect
