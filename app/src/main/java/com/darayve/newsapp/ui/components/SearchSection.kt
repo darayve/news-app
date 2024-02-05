@@ -4,13 +4,15 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.MicOff
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -18,6 +20,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.darayve.newsapp.util.SpeechToTextParser
 
@@ -37,18 +40,20 @@ fun SearchSection(
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        BasicTextField(
+        OutlinedTextField(
             modifier = Modifier
                 .weight(1f)
                 .padding(end = 8.dp),
             value = speechState.spokenText.ifEmpty { searchQuery },
-            onValueChange = { query ->
-                onSearchQueryChange(query)
-            },
-            textStyle = MaterialTheme.typography.bodyLarge.copy(
-                MaterialTheme.colorScheme.onPrimary
-            ),
+            onValueChange = onSearchQueryChange,
+            textStyle = MaterialTheme.typography.bodyLarge,
             singleLine = true,
+            placeholder = { Text("Search for a subject") },
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = Color.Transparent,
+                unfocusedBorderColor = Color.Transparent,
+                errorBorderColor = MaterialTheme.colorScheme.error
+            )
         )
         IconButton(
             onClick = {
