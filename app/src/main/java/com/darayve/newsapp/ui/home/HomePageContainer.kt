@@ -1,12 +1,8 @@
 package com.darayve.newsapp.ui.home
 
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.TopAppBarDefaults
@@ -37,7 +33,6 @@ fun HomePageContainer(
 ) {
     Surface(
         modifier = modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
     ) {
         val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
@@ -77,7 +72,7 @@ fun HomePageContainer(
 
                     ArticleScreen(
                         modifier = modifier.padding(innerPadding),
-                        onNavigateToHome = { navController.navigate(NewsScreen.Homepage.name) },
+                        onNavigateUp = { navController.navigate(NewsScreen.Homepage.name) },
                         articleUrl = articleUrl
                     )
                 }

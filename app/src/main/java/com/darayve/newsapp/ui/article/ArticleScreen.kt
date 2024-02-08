@@ -8,7 +8,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 
 @Composable
 fun ArticleScreen(
-    onNavigateToHome: () -> Unit,
+    onNavigateUp: () -> Unit,
     articleUrl: String,
     modifier: Modifier = Modifier
 ) {

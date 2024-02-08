@@ -1,6 +1,7 @@
 package com.darayve.newsapp.ui.components
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -9,6 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.darayve.newsapp.domain.Article
 
@@ -26,16 +28,16 @@ fun NewsListItem(modifier: Modifier = Modifier, article: Article) {
 
         Spacer(modifier = Modifier.height(14.dp))
 
-        Text(
-            text = "Source: ${article.source}",
-            style = MaterialTheme.typography.bodyLarge
-        )
+        Row {
+            Text(
+                text = "Source: ",
+                style = MaterialTheme.typography.bodyLarge
+            )
+            Text(
+                text = article.source,
+                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
+            )
 
-        Spacer(modifier = Modifier.height(14.dp))
-
-        Text(
-            text = "Author: ${article.author}",
-            style = MaterialTheme.typography.bodyMedium
-        )
+        }
     }
 }

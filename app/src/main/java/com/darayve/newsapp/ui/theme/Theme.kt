@@ -61,8 +61,10 @@ fun NewsAppTheme(
             val window = (view.context as Activity).window
             window.statusBarColor = MidnightTransparent.toArgb()
             window.navigationBarColor = MidnightTransparent.toArgb()
-            window.isStatusBarContrastEnforced = true
-            window.isNavigationBarContrastEnforced = true
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                window.isStatusBarContrastEnforced = true
+                window.isNavigationBarContrastEnforced = true
+            }
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
         }
     }
