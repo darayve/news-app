@@ -1,5 +1,5 @@
-# Noozapp
-Noozapp é um aplicativo moderno para Android que oferece uma maneira fácil de se manter atualizado com as últimas notícias. Utiliza a arquitetura MVVM e o Jetpack Compose para uma interface de usuário agradável.
+# Insightify
+Insightify é um aplicativo moderno para Android que oferece uma maneira fácil de se manter atualizado com as últimas notícias. Utiliza a arquitetura MVVM e o Jetpack Compose para uma interface de usuário agradável.
 Este aplicativo resgata os artigos consumindo a [News API](https://newsapi.org/).
 
 ## Screenshots

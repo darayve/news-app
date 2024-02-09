@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Noozapp</string>
+    <string name="app_name">Insightify</string>
     <string name="icon_arrow_content_description">Exit search mode</string>
     <string name="icon_search_content_description">Search for articles</string>
     <string name="textfield_search_placeholder">Search for a subject</string>
