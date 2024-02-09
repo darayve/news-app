@@ -22,6 +22,8 @@ class SpeechToTextParser(
 
     private val recognizer = SpeechRecognizer.createSpeechRecognizer(application)
 
+    fun clearState() { _speechState.update { SpeechToTextState() } }
+
     fun startListening(languageCode: String = "en") {
         _speechState.update { SpeechToTextState() }
 

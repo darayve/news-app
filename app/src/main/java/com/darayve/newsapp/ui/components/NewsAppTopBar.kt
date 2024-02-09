@@ -35,6 +35,7 @@ fun NewsAppTopBar(
     TopAppBar(title = {
         if (isSearchModeActive) {
             SearchSection(searchQuery = searchQuery, onSearchQueryChange = { query ->
+                speechToTextParser.clearState()
                 viewModel.setSearchQuery(query = query)
             }, onMicClick = {
                 when {
