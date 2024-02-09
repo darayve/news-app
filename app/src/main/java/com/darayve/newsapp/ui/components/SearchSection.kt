@@ -58,7 +58,8 @@ fun SearchSection(
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = Color.Transparent,
                 unfocusedBorderColor = Color.Transparent,
-                errorBorderColor = MaterialTheme.colorScheme.error
+                errorBorderColor = MaterialTheme.colorScheme.error,
+                cursorColor = MaterialTheme.colorScheme.onPrimary
             )
         )
         IconButton(
